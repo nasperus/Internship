@@ -11,7 +11,7 @@ public class SpawnTrees : MonoBehaviour
     {
         SpawnAtStart();
 
-        StartCoroutine(SpawnAfterFiveSecond());
+
     }
 
     private void SpawnAtStart()
@@ -23,10 +23,7 @@ public class SpawnTrees : MonoBehaviour
 
     }
 
-    private IEnumerator SpawnAfterFiveSecond()
-    {
-        yield return new WaitForSeconds(5);
-        SpawnAtStart();
-    }
+
+   
 
 }

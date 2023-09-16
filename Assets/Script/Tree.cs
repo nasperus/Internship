@@ -2,19 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using Unity.VisualScripting;
 
 public class Tree : MonoBehaviour
 {
+
     [SerializeField] private int health;
     [SerializeField] GameObject logPrefab;
+
+
+    private GameObject log;
+    [HideInInspector] public GameObject spawnedLog;
     private int currentChildIndex = 0;
-    public Vector3 spawnRange = new Vector3(10f, 0f, 10f);
 
 
-    public float shakeDuration = 0.2f;
-    public float shakeStrength = 0.1f;
 
 
+    Player player;
+
+    public float shakeDuration = 0.5f;
+    public float shakeStrength = 0.5f;
+
+
+    private void Start()
+    {
+
+    }
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -27,13 +41,18 @@ public class Tree : MonoBehaviour
 
         if (currentChildIndex == transform.childCount)
         {
+            currentChildIndex = 0;
             Destroy(gameObject);
+
+
         }
 
     }
 
+    private void TreeChecker()
+    {
 
-
+    }
 
     public void ShakeTree()
     {
@@ -45,7 +64,13 @@ public class Tree : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject log = Instantiate(logPrefab, transform.position, Quaternion.identity);
+
+
+            log = Instantiate(logPrefab, transform.position, Quaternion.identity);
+            log.transform.position = player.GetPosition().position;
+            //log.transform.DOMove(player.GetPosition().position, 1).SetEase(Ease.OutCubic).OnComplete(() => { log.transform.SetParent(player.GetPosition()); });
+
+            spawnedLog = log;
             log.transform.DOMoveY(0.5f, 0.5f).SetEase(Ease.OutBounce);
 
             yield return new WaitForSeconds(0.5f);

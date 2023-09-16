@@ -202,7 +202,7 @@ Transform:
   - {fileID: 7214849433658441855}
   - {fileID: 745574562062426654}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3086227309964007074
 MonoBehaviour:
@@ -218,6 +218,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   logPrefab: {fileID: 7016587594201406399, guid: f08270ebb18ecdf4ebd15c57b9499b5d, type: 3}
+  playerPos: {fileID: 2271340527348787451, guid: cbd921e97721e3f40b2f10f86e3531d8, type: 3}
+  spawnedLog: {fileID: 0}
+  shakeDuration: 0.2
+  shakeStrength: 0.1
 --- !u!65 &2312474010741212502
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,8 +241,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5797504, y: 0.9834827, z: 0.46318817}
-  m_Center: {x: -0.014786959, y: 0.5725718, z: 0.005693674}
+  m_Size: {x: 0.6613165, y: 1.0881476, z: 0.60399723}
+  m_Center: {x: 0.014346838, y: 0.6249043, z: 0.0016014576}
 --- !u!1 &6295310611667832500
 GameObject:
   m_ObjectHideFlags: 0
