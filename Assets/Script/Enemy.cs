@@ -6,49 +6,51 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(BoxCollider))]
 public class Enemy : MonoBehaviour
 {
-    private NavMeshAgent enemy;
-    [SerializeField] Transform playerTransform;
 
+
+    [SerializeField] private Transform playerTransform;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator animator;
     [SerializeField] private float attackRange;
     [SerializeField] private int damage;
-  
     [SerializeField] private int health;
-
+    private NavMeshAgent enemy;
     Player player;
+
+
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
         StartCoroutine(AttackToPlayer());
-    
+
     }
 
 
 
     private void Update()
     {
+
         enemy.SetDestination(playerTransform.position);
         transform.LookAt(playerTransform.position);
-        animator.SetBool("IsMoving", true);
+        animator.SetBool("IsMoving", rb.velocity.magnitude > 0);
+
+
     }
 
+
+    //Enemy attack player
     private IEnumerator AttackToPlayer()
     {
         while (true)
         {
-
             float discatnceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
             if (discatnceToPlayer <= attackRange)
             {
-              
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, attackRange))
                 {
-                    
                     if (hit.collider.CompareTag("Player"))
                     {
-                       
                         if (hit.collider.gameObject.TryGetComponent<Player>(out player))
                         {
                             animator.SetTrigger("Attack");
@@ -59,7 +61,7 @@ public class Enemy : MonoBehaviour
                                 player.TakeDamage(damage);
                                 Debug.Log("Attack");
                             }
-                            
+
                         }
                     }
                 }
@@ -70,17 +72,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
+
+    //Enemy took damage
     public void TakeDamage(int damage)
     {
         health -= damage;
-      
 
         if (health <= 0)
         {
             Destroy(gameObject);
         }
     }
+
     private void OnValidate()
     {
         if (rb != null)

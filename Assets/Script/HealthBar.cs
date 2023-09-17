@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] Slider slider;
-    [SerializeField] Gradient gradient;
-    [SerializeField] Image fill;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Gradient gradient;
+    [SerializeField] private Image fill;
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
         slider.value = health;
-        fill.color =  gradient.Evaluate(1f);
+        fill.color = gradient.Evaluate(1f);
     }
     public void SetHealth(int health)
     {

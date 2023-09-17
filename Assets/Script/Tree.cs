@@ -4,75 +4,72 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 
 public class Tree : MonoBehaviour
 {
+    public static Tree instance;
 
     [SerializeField] private int health;
-    [SerializeField] GameObject logPrefab;
-
-
-    private GameObject log;
-    [HideInInspector] public GameObject spawnedLog;
+    [SerializeField] private GameObject logPrefab;
+    [SerializeField] Transform backPosition;
+    [SerializeField] private float shakeDuration = 0.5f;
+    [SerializeField] private float shakeStrength = 0.5f;
     private int currentChildIndex = 0;
-
-
-
-
     Player player;
 
-    public float shakeDuration = 0.5f;
-    public float shakeStrength = 0.5f;
-
+    private void Awake()
+    {
+        instance = this;
+        player = FindObjectOfType<Player>();
+    }
 
     private void Start()
     {
 
+        backPosition = player.GetPosition();
+
     }
+
+
+    //Tree take damage
     public void TakeDamage(int damage)
     {
         health -= damage;
         transform.GetChild(currentChildIndex).gameObject.SetActive(false);
         currentChildIndex++;
 
-
         StartCoroutine(DropLogs());
         ShakeTree();
 
         if (currentChildIndex == transform.childCount)
         {
+
+            SpawnTrees.instance.counter--;
             currentChildIndex = 0;
             Destroy(gameObject);
-
 
         }
 
     }
 
-    private void TreeChecker()
-    {
 
-    }
-
+    // Tree shaking animation
     public void ShakeTree()
     {
         transform.DOShakePosition(shakeDuration, shakeStrength);
     }
 
 
+    //Spawn logs and the player picked them up
     private IEnumerator DropLogs()
     {
         for (int i = 0; i < 2; i++)
         {
 
 
-            log = Instantiate(logPrefab, transform.position, Quaternion.identity);
-            log.transform.position = player.GetPosition().position;
-            //log.transform.DOMove(player.GetPosition().position, 1).SetEase(Ease.OutCubic).OnComplete(() => { log.transform.SetParent(player.GetPosition()); });
-
-            spawnedLog = log;
-            log.transform.DOMoveY(0.5f, 0.5f).SetEase(Ease.OutBounce);
-
+            GameObject log = Instantiate(logPrefab, transform.position, Quaternion.identity);
+            log.transform.DOMove(backPosition.position, 1).SetEase(Ease.OutBack).OnComplete(() => { log.transform.SetParent(backPosition); });
             yield return new WaitForSeconds(0.5f);
 
         }

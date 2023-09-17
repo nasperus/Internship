@@ -14,26 +14,35 @@ using UnityEngine.SocialPlatforms.Impl;
 public class Player : MonoBehaviour
 {
     public static Player instance;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
+
+
+    [Header("Health")]
     [SerializeField] private int health;
     [SerializeField] private HealthBar healthBar;
-    [SerializeField] private Transform playerBack;
+
+    [Header("Score")]
     [SerializeField] private int scoreIncrease;
-    [SerializeField] private TextMeshProUGUI scoreText;
+
+    [Header("Player Damage")]
+    [SerializeField] private int playerDamage = 10;
 
     [Header("inspector")]
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator animator;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("Raycast")]
     [SerializeField] private Transform rayPosition;
     [SerializeField] float hitDistance = 1.5f;
 
+    [HideInInspector] public Transform playerBack;
 
-    [SerializeField] private int playerDamage = 10;
+
 
     public event Action<int> OnScoreChanged;
 
@@ -58,20 +67,14 @@ public class Player : MonoBehaviour
         Movement();
     }
 
-    public  Transform GetPosition() { return playerBack; }
-    private void Update()
-    {
 
-        //PickUpLogs();
-    }
 
-   
 
-    
-    public void PickUpLogs()
-    {
-        tree.spawnedLog.transform.DOMove(playerBack.position, 1).SetEase(Ease.OutCubic).OnComplete(() => { tree.spawnedLog.transform.SetParent(playerBack); });
-    }
+    public Transform GetPosition() { return playerBack; }
+
+
+
+    //Player Movement
     private void Movement()
     {
 
@@ -82,17 +85,19 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(horizontalInput * moveSpeed, rb.velocity.y, verticalInput * moveSpeed);
         isMoving = moveDirection != Vector3.zero;
         animator.SetBool("IsMoving", isMoving);
+
         if (isMoving)
         {
-           
+
             Quaternion rotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed);
         }
 
     }
 
- 
 
+
+    // Collecting Logs and increase score
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Logs"))
@@ -103,9 +108,11 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
+    // Player attack enemies and tree
     private IEnumerator AttackCoroutine()
     {
-
         while (true)
         {
             if (Physics.Raycast(rayPosition.position, transform.forward, out RaycastHit hit, hitDistance))
@@ -121,13 +128,13 @@ public class Player : MonoBehaviour
                         if (tree != null)
                         {
                             tree.TakeDamage(playerDamage);
-                            
-                        }  
+
+                        }
 
                         if (enemy != null)
                         {
                             enemy.TakeDamage(playerDamage);
-                            
+
                         }
                     }
 
@@ -139,6 +146,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    //player took damage
     public void TakeDamage(int damage)
     {
         health -= damage;

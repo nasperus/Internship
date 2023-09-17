@@ -638,7 +638,6 @@ GameObject:
   - component: {fileID: 4449407355583624478}
   - component: {fileID: 6860964692233387618}
   - component: {fileID: 2858420179845025132}
-  - component: {fileID: 6087929640862534034}
   m_Layer: 5
   m_Name: 'Canvas '
   m_TagString: Untagged
@@ -730,19 +729,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6087929640862534034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787592002717317283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29e8cbeac6fbeb4eac22a0423090197, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &2949395293631526913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,7 +2074,7 @@ Transform:
   - {fileID: 4657691824842276427}
   - {fileID: 7748954659027103355}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &467535155556226968
 Animator:
@@ -2154,7 +2140,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!65 &1912421836273186406
 BoxCollider:

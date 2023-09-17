@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 4650006449614485276, guid: 902b0ae855d7d3249adcde92c774097a, type: 3}
   - {fileID: 4650006449614485276, guid: 902b0ae855d7d3249adcde92c774097a, type: 3}
   spawnPosition: {fileID: 4236373242698658225, guid: d2adf8f34c9b53848893937baeb73e3c, type: 3}
+  backPosition: {fileID: 8263044116659972710, guid: 03e1c9ac902ad754980da35bf2a9d2a3, type: 3}
