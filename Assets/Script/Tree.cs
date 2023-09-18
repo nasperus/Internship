@@ -33,8 +33,6 @@ public class Tree : MonoBehaviour, IAttackable
 
 
     //Tree take damage
-
-
     public void Damage(int damage)
     {
         health -= damage;

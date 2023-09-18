@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, IDamagable
 
 
         Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        rb.velocity = new Vector3(horizontalInput * moveSpeed, rb.velocity.y, verticalInput * moveSpeed);
+        rb.velocity = moveDirection * moveSpeed;
         isMoving = moveDirection != Vector3.zero;
         animator.SetBool("IsMoving", isMoving);
 
