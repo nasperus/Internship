@@ -1594,10 +1594,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4608389991815533649, guid: cbd921e97721e3f40b2f10f86e3531d8, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4738778950728579939, guid: cbd921e97721e3f40b2f10f86e3531d8, type: 3}
       propertyPath: joystick
       value: 

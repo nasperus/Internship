@@ -10,7 +10,7 @@ public class Score : MonoBehaviour
 
     public static Score instance;
     private int score;
-
+    Player player;
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class Score : MonoBehaviour
     }
 
 
-    private void OnEnable()
+    private void Start()
     {
         Player.instance.OnScoreChanged += ModifyScore;
     }
@@ -30,7 +30,7 @@ public class Score : MonoBehaviour
 
     public int GetScore() { return score; }
 
-    public void ModifyScore(int value) { score += value;  }
+    public void ModifyScore(int value) { score += value; }
 
-    
+
 }

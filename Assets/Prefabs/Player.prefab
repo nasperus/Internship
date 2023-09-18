@@ -94,7 +94,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6687856406347250157
 MonoBehaviour:
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29e8cbeac6fbeb4eac22a0423090197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1 &229125890048197836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,7 +2510,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2271340527348787451}
   - component: {fileID: 3605605895717386538}
-  - component: {fileID: 4642338343190168119}
   - component: {fileID: 4738778950728579939}
   - component: {fileID: 1669692676482327404}
   - component: {fileID: 6712571894513618285}
@@ -2568,36 +2568,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4642338343190168119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9201875268978590480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: ca288003e43b1474b95b0187b8fbb9c4, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &4738778950728579939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2610,19 +2580,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93904fee8cf97f64eac00417dfb7e42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 5
   rotateSpeed: 3
   health: 30
   healthBar: {fileID: 2590778126470295818}
-  playerBack: {fileID: 5189569588685942081}
   scoreIncrease: 1
-  scoreText: {fileID: 0}
+  playerDamage: 10
   joystick: {fileID: 0}
   rb: {fileID: 1669692676482327404}
   animator: {fileID: 3605605895717386538}
+  scoreText: {fileID: 0}
   rayPosition: {fileID: 7558353264271000104}
   hitDistance: 1.5
-  playerDamage: 10
+  playerBack: {fileID: 5189569588685942081}
 --- !u!54 &1669692676482327404
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2649,7 +2619,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &6712571894513618285
 BoxCollider:
   m_ObjectHideFlags: 0

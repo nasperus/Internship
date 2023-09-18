@@ -1,27 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(BoxCollider))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IAttackable
 {
 
-
+    public static Enemy instance;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator animator;
     [SerializeField] private float attackRange;
     [SerializeField] private int damage;
     [SerializeField] private int health;
+    [SerializeField] private EnemyHealthbar healthbar;
     private NavMeshAgent enemy;
     Player player;
 
+    public event Action<int> OnHealthChanged;
 
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
         StartCoroutine(AttackToPlayer());
+        healthbar.SetMaxHealth(health);
 
     }
 
@@ -49,20 +60,13 @@ public class Enemy : MonoBehaviour
             {
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, attackRange))
                 {
-                    if (hit.collider.CompareTag("Player"))
+
+                    if (hit.collider.TryGetComponent<IDamagable>(out var damagable))
                     {
-                        if (hit.collider.gameObject.TryGetComponent<Player>(out player))
-                        {
-                            animator.SetTrigger("Attack");
-                            yield return new WaitForSeconds(0.5f);
+                        animator.SetTrigger("Attack");
+                        yield return new WaitForSeconds(0.5f);
 
-                            if (player != null)
-                            {
-                                player.TakeDamage(damage);
-                                Debug.Log("Attack");
-                            }
-
-                        }
+                        damagable?.PlayerDamage(damage);
                     }
                 }
 
@@ -72,16 +76,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     //Enemy took damage
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
 
+
+    public void Damage(int damage)
+    {
+
+        health -= damage;
+        OnHealthChanged?.Invoke(health);
         if (health <= 0)
         {
             Destroy(gameObject);
         }
+
+
     }
 
     private void OnValidate()

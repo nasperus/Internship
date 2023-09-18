@@ -770,7 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4403839359913323954}
   - component: {fileID: 1954470201851093146}
-  - component: {fileID: 5189006809418826620}
+  - component: {fileID: 2743761176468166082}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -852,31 +852,31 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5189006809418826620
+--- !u!114 &2743761176468166082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986072274906915275}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e431618f2fe0d8d4f90e47a725aeacb8, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ebe738eea4e1f40b7eafc340d5f09e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1954470201851093146}
   gradient:
     serializedVersion: 2
-    key0: {r: 0.8207547, g: 0.15098791, b: 0.15098791, a: 1}
-    key1: {r: 0.82304126, g: 0.8396226, b: 0.21782663, a: 1}
-    key2: {r: 0.119008936, g: 0.8396226, b: 0.07524917, a: 0}
+    key0: {r: 0.764151, g: 0.06848521, b: 0.06848521, a: 1}
+    key1: {r: 0.7772853, g: 0.8301887, b: 0.246707, a: 1}
+    key2: {r: 0.20962834, g: 0.6981132, b: 0.1284265, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 17926
-    ctime1: 39899
+    ctime0: 14842
+    ctime1: 34888
     ctime2: 65535
     ctime3: 0
     ctime4: 0
@@ -2074,7 +2074,7 @@ Transform:
   - {fileID: 4657691824842276427}
   - {fileID: 7748954659027103355}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &467535155556226968
 Animator:
@@ -2115,6 +2115,7 @@ MonoBehaviour:
   attackRange: 2
   damage: 10
   health: 10
+  healthbar: {fileID: 2743761176468166082}
 --- !u!54 &6125837516940015821
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2173,8 +2174,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2
+  m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1.5

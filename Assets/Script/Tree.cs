@@ -6,7 +6,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 
-public class Tree : MonoBehaviour
+public class Tree : MonoBehaviour, IAttackable
 {
     public static Tree instance;
 
@@ -16,24 +16,26 @@ public class Tree : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeStrength = 0.5f;
     private int currentChildIndex = 0;
-    Player player;
+
 
     private void Awake()
     {
         instance = this;
-        player = FindObjectOfType<Player>();
+
     }
 
     private void Start()
     {
 
-        backPosition = player.GetPosition();
+        backPosition = Player.instance.PlayerBack;
 
     }
 
 
     //Tree take damage
-    public void TakeDamage(int damage)
+
+
+    public void Damage(int damage)
     {
         health -= damage;
         transform.GetChild(currentChildIndex).gameObject.SetActive(false);
@@ -66,7 +68,6 @@ public class Tree : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-
 
             GameObject log = Instantiate(logPrefab, transform.position, Quaternion.identity);
             log.transform.DOMove(backPosition.position, 1).SetEase(Ease.OutBack).OnComplete(() => { log.transform.SetParent(backPosition); });

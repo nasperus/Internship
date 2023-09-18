@@ -9,9 +9,12 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
 
+
 [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(BoxCollider))]
 
-public class Player : MonoBehaviour
+
+
+public class Player : MonoBehaviour, IDamagable
 {
     public static Player instance;
 
@@ -40,11 +43,14 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform rayPosition;
     [SerializeField] float hitDistance = 1.5f;
 
-    [HideInInspector] public Transform playerBack;
+    [SerializeField] private Transform playerBack;
 
-
+    public Transform PlayerBack => playerBack;
 
     public event Action<int> OnScoreChanged;
+    public event Action<int> OnHealthChanged;
+
+
 
 
     Tree tree;
@@ -61,16 +67,12 @@ public class Player : MonoBehaviour
         StartCoroutine(AttackCoroutine());
         healthBar.SetMaxHealth(health);
         scoreText.text = Score.instance.GetScore().ToString();
+
     }
     void FixedUpdate()
     {
         Movement();
     }
-
-
-
-
-    public Transform GetPosition() { return playerBack; }
 
 
 
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour
 
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
+
 
         Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
         rb.velocity = new Vector3(horizontalInput * moveSpeed, rb.velocity.y, verticalInput * moveSpeed);
@@ -94,6 +97,7 @@ public class Player : MonoBehaviour
         }
 
     }
+
 
 
 
@@ -118,27 +122,11 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(rayPosition.position, transform.forward, out RaycastHit hit, hitDistance))
             {
 
-                if (hit.collider.CompareTag("Tree") || hit.collider.CompareTag("Enemy"))
+                if (hit.collider.TryGetComponent<IAttackable>(out var attackable))
                 {
-                    if (hit.collider.gameObject.TryGetComponent<Tree>(out tree) || hit.collider.gameObject.TryGetComponent<Enemy>(out enemy))
-                    {
-                        animator.SetTrigger("Attack");
-                        yield return new WaitForSeconds(0.5f);
-
-                        if (tree != null)
-                        {
-                            tree.TakeDamage(playerDamage);
-
-                        }
-
-                        if (enemy != null)
-                        {
-                            enemy.TakeDamage(playerDamage);
-
-                        }
-                    }
-
-
+                    animator.SetTrigger("Attack");
+                    yield return new WaitForSeconds(0.5f);
+                    attackable?.Damage(playerDamage);
                 }
             }
 
@@ -148,16 +136,19 @@ public class Player : MonoBehaviour
 
 
     //player took damage
-    public void TakeDamage(int damage)
+    public void PlayerDamage(int damage)
     {
+
         health -= damage;
-        healthBar.SetHealth(health);
+        OnHealthChanged?.Invoke(health);
 
         if (health <= 0)
         {
             SceneLoader.Instance.GameOver();
             Destroy(gameObject);
         }
+
+
     }
 
     private void OnValidate()

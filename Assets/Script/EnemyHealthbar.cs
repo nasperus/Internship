@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class HealthBar : MonoBehaviour
+public class EnemyHealthbar : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private Gradient gradient;
@@ -16,17 +15,16 @@ public class HealthBar : MonoBehaviour
         fill.color = gradient.Evaluate(1f);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        Player.instance.OnHealthChanged += SetHealth;
-        
-    
+       
+        Enemy.instance.OnHealthChanged += SetHealth;
     }
 
     private void OnDestroy()
     {
-        Player.instance.OnHealthChanged -= SetHealth;
-       
+
+        Enemy.instance.OnHealthChanged -= SetHealth;
     }
 
     public void SetHealth(int health)
